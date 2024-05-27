@@ -10,8 +10,8 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: 18
-    - name: yarn install
-      run: yarn install
+    - name: Install eslint
+        run: npm install eslint --save-dev
     - name: eslint
       uses: icrawl/action-eslint@v1
       with:
