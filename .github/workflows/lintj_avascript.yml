@@ -14,5 +14,16 @@ jobs:
       run: npm install eslint --save-dev
     - name: Lint
       run: npx eslint scripts.js --no-config-lookup
-      
+
+  deploy:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+
       
