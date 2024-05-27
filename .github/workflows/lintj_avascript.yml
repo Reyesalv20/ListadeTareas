@@ -12,7 +12,6 @@ jobs:
         node-version: 18
     - name: Install eslint
       run: npm install eslint --save-dev
-    - name: eslint
-      uses: icrawl/action-eslint@v1
-      with:
-        custom-glob: apps # only if a different glob is needed, default: src
+    - name: Lint
+      run: npx eslint scripts.js
+      
