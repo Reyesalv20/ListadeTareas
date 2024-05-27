@@ -15,15 +15,15 @@ jobs:
     - name: Lint
       run: npx eslint scripts.js --no-config-lookup
 
+# Path: .github/workflows/lintj_avascript.yml
   deploy:
-    needs: lint
+    needs:
+      - lint
     runs-on: ubuntu-latest
-    steps:
+    steps: 
     - uses: actions/checkout@v4
-    - name: Deploy to GitHub Pages
+    - name: Deploy educational content
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
-
-      
+        github_token: ${{ secrets.test }}
+        publish_dir: ./dist
