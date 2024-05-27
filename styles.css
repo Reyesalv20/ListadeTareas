@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fcf5c7;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffc09f;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input[type="text"], select {
+    width: calc(50% - 22px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #a0ced9;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #a0ced9;
+}
+
+.week {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.day {
+    background-color: #ffee93;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: calc(33% - 20px);
+    margin-bottom: 20px;
+}
+
+.day h2 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #a0ced9;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button.delete, button.complete {
+    margin-left: 5px;
+}
+
+button.delete {
+    background-color: #ff6565;
+}
+
+button.delete:hover {
+    background-color: #c82333;
+}
+
+button.complete {
+    background-color: #b0f2c2;
+}
+
+button.complete:hover {
+    background-color: #0056b3;
+}
+
+.quote-container {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #95b8f6;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
