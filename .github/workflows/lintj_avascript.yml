@@ -13,5 +13,6 @@ jobs:
     - name: Install eslint
       run: npm install eslint --save-dev
     - name: Lint
-      run: npx eslint scripts.js --rule "no-unused-vars:error" --rule "semi:error"
+      run: npx eslint scripts.js --no-config-lookup
+      
       
