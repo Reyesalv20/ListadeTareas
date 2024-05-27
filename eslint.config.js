@@ -1,17 +1,17 @@
-export default {
+// Use module.exports instead of export default
+module.exports = {
     root: true,
     env: {
         browser: true,
         es2021: true,
     },
-    extends: [
-        'eslint:recommended',
-    ],
+    extends: "eslint:recommended",
     parserOptions: {
-        ecmaVersion: 12, // Adjust according to your ES version
-        sourceType: 'module',
+        ecmaVersion: 12,
+        sourceType: "module",
     },
     rules: {
-        // Define your project's ESLint rules here
+        "no-unused-vars": "warn",
+        "no-console": "off",
     },
 };
