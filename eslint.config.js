@@ -15,4 +15,3 @@ export default {
         // Define your project's ESLint rules here
     },
 };
-
