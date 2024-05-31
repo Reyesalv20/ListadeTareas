@@ -1,5 +1,4 @@
 name: Lint Javascript
-run-name: Lint Javascript
 on: [push, pull_request]
 
 jobs:
@@ -13,8 +12,10 @@ jobs:
           node-version: '18'
       - name: Install dependencies
         run: npm install
+        working-directory: json  # Specify the directory containing package.json
       - name: Run ESLint
         run: npx eslint . --ext .js --no-config-lookup
+        working-directory: json  # Ensure ESLint runs in the correct directory
 
   build:
     name: Build Application
@@ -34,8 +35,10 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm install
+        working-directory: json  # Specify the directory containing package.json
       - name: Build
         run: npm run build
+        working-directory: json  # Ensure build commands run in the correct directory
 
   test:
     name: Run Tests
@@ -55,8 +58,10 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm install
+        working-directory: json  # Specify the directory containing package.json
       - name: Run unit tests
         run: npm test
+        working-directory: json  # Ensure tests are run in the correct directory
 
   deploy:
     name: Deploy to GitHub Pages
@@ -69,8 +74,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-
-
-
 
 
