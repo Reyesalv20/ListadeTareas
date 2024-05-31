@@ -34,10 +34,10 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm install
-        working-directory: ListaTareas/json  # Specify the directory containing package.json
+        working-directory: ListadeTareas/json  # Specify the directory containing package.json
       - name: Build
         run: npm run build
-        working-directory: ListaTareas/json  # Ensure build commands run in the correct directory
+        working-directory: ListadeTareas/json  # Ensure build commands run in the correct directory
 
   test:
     name: Run Tests
