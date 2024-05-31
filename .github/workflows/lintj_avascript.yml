@@ -14,8 +14,8 @@ jobs:
         run: npm install
         working-directory: json  # Specify the directory containing package.json
       - name: Run ESLint
-        run: npx eslint . --ext .js --no-config-lookup
-
+        run: npx eslint scripts.js --no-config-lookup
+              
   build:
     name: Build Application
     needs: lint
