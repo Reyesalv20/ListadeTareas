@@ -4,30 +4,72 @@ on: [push, pull_request]
 
 jobs:
   lint:
+    name: Lint Javascript Files
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install eslint
-      run: npm install eslint --save-dev
-    - name: Lint
-      run: npx eslint scripts.js --no-config-lookup
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Run ESLint
+        run: npx eslint . --ext .js --no-config-lookup
 
-# Path: .github/workflows/lintj_avascript.yml
+  build:
+    name: Build Application
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Cache Node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+
+  test:
+    name: Run Tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Cache Node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npm test
+
   deploy:
-    needs:
-      - lint
+    name: Deploy to GitHub Pages
+    needs: test
     runs-on: ubuntu-latest
     steps: 
-    - uses: actions/checkout@v4
-    - name: Deploy educational content
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.test }}
-        publish_dir: ./dist
-  
+      - uses: actions/checkout@v4
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
 
 
 
