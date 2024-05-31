@@ -1,20 +1,22 @@
-  - name: DevSkim
-  uses: microsoft/DevSkim-Action@v1.0.14
-  with:
-    # The sub directory of the repository root to scan. Repository root used by default.
-    directory-to-scan: # optional, default is GITHUB_WORKSPACE
-    # Optionally scan the contents of archives.
-    should-scan-archives: # optional
-    # The filename for the output.
-    output-filename: # optional, default is devskim-results.sarif
-    # The sub directory for the output under GITHUB_WORKSPACE.
-    output-directory: # optional, default is GITHUB_WORKSPACE
-    # Optional comma separated list of file globs to ignore when scanning.
-    ignore-globs: # optional, default is **/.git/**,**/bin/**
-    # Optional comma separated list of rule IDs to ignore
-    exclude-rules: # optional, default is 
-    # Optional path in the repository containing a json to provide to the --options-json argument
-    options-json: # optional, default is 
-    # Provide any other command line arguments for the DevSkim analyze command. See DevSkim documentation for usage instructions.
-    extra-options: # optional, default is 
-          
+name: DevSkim Security Scan
+
+on: [push, pull_request]  # Trigger the workflow on push or pull request events.
+
+jobs:
+  security_scan:
+    runs-on: ubuntu-latest  # Specifies the runner environment.
+    steps:
+      - name: Checkout code  # Checkout the repository code.
+        uses: actions/checkout@v2
+      
+      - name: Run DevSkim  # Run the DevSkim action to analyze the code.
+        uses: microsoft/DevSkim-Action@v1.0.14
+        with:
+          directory-to-scan: ''  # Scan the entire repository. Specify a path to scan a specific directory.
+          should-scan-archives: true  # Set to true to include archive scanning.
+          output-filename: 'devskim-results.sarif'  # The filename for output results.
+          output-directory: './security-reports'  # Directory to store the output results.
+          ignore-globs: '**/.git/**, **/bin/**'  # Glob patterns to ignore during scanning.
+          exclude-rules: ''  # Specify rule IDs to exclude, if necessary.
+          options-json: ''  # Path to a JSON file with additional options, if needed.
+          extra-options: ''  # Any additional command line arguments.

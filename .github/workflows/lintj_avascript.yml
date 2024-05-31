@@ -28,23 +28,7 @@ jobs:
         github_token: ${{ secrets.test }}
         publish_dir: ./dist
   
-  devskim:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      - name: Run DevSkim
-        uses: microsoft/DevSkim-Action@v1.0.14
-        with:
-          directory-to-scan: ''  # Set this to the directory you want to scan, or leave blank to scan the whole repository
-          should-scan-archives: true
-          output-filename: 'devskim-results.sarif'
-          output-directory: './security-reports'
-          ignore-globs: '**/.git/**,**/bin/**'
-          exclude-rules: ''
-          options-json: ''
-          extra-options: ''
+
 
 
 
