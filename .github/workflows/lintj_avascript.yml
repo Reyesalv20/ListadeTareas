@@ -37,6 +37,7 @@ jobs:
         working-directory: json/lock  # Specify the directory containing package.json
       - name: Build
         run: npm run build
+        working-directory: json
 
   test:
     name: Run Tests
