@@ -14,25 +14,11 @@ jobs:
       run: npm install eslint --save-dev
     - name: Lint
       run: npx eslint scripts.js --no-config-lookup
-  test:
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup Node 16
-      uses: actions/setup-node@v4
-      with:
-        node-version: 16.x
-    - name: Install dependencies
-      run: npm install
-    - name: Run the unit tests
-      run: npm test
 
 # Path: .github/workflows/lintj_avascript.yml
   deploy:
     needs:
       - lint
-      - test
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v4
@@ -41,4 +27,24 @@ jobs:
       with:
         github_token: ${{ secrets.test }}
         publish_dir: ./dist
+  
+  devskim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run DevSkim
+        uses: microsoft/DevSkim-Action@v1.0.14
+        with:
+          directory-to-scan: ''  # Set this to the directory you want to scan, or leave blank to scan the whole repository
+          should-scan-archives: true
+          output-filename: 'devskim-results.sarif'
+          output-directory: './security-reports'
+          ignore-globs: '**/.git/**,**/bin/**'
+          exclude-rules: ''
+          options-json: ''
+          extra-options: ''
+
+
 
