@@ -21,23 +21,22 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Cache Node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: npm install
-        working-directory: json/lock  # Specify the directory containing package.json
-      - name: Build
-        run: npm run build
-        working-directory: json/lock
+      
+      - name: Install TypeScript Compiler
+        run: npm install typescript --no-save
+        working-directory: json  # Adjust if your directory is different
+
+      - name: Compile TypeScript
+        run: npx tsc
+        working-directory: json  # Ensure this points to where tsconfig.json is located
+
 
   test:
     name: Run Tests
