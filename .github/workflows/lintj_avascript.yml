@@ -1,74 +1,34 @@
 name: Lint Javascript
+run-name: Lint Javascript
 on: [push, pull_request]
 
 jobs:
   lint:
-    name: Lint Javascript Files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Install dependencies
-        run: npm install
-        working-directory: json  # Specify the directory containing package.json
-      - name: Run ESLint
-        run: npx eslint scripts.js --no-config-lookup
-              
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+    - name: Install eslint
+      run: npm install eslint --save-dev
+    - name: Lint
+      run: npx eslint scripts.js --no-config-lookup
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      
-      - name: Install TypeScript Compiler
-        run: npm install typescript --no-save
-        working-directory: ListadeTareas/json  # Ensure this is correct
-
-      - name: Compile TypeScript
-        run: npx tsc
-        working-directory: List onadeTareas/json  # Ensure this is correct
-
-
-
-  test:
-    name: Run Tests
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Cache Node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: npm install
-        working-directory: json  # Specify the directory containing package.json
-      - name: Run unit tests
-        run: npm test
-        working-directory: json  # Ensure tests are run in the correct directory
-
+# Path: .github/workflows/lintj_avascript.yml
   deploy:
-    name: Deploy to GitHub Pages
-    needs: test
+    needs:
+      - lint
     runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v4
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+    - uses: actions/checkout@v4
+    - name: Deploy educational content
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.test }}
+        publish_dir: ./dist
+  
+
+
 
 
