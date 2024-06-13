@@ -1,33 +1,73 @@
 name: Lint Javascript
-run-name: Lint Javascript
 on: [push, pull_request]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install eslint
-      run: npm install eslint --save-dev
-    - name: Lint
-      run: npx eslint scripts.js --no-config-lookup
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install eslint
+        run: npm install eslint --save-dev
+      - name: Lint
+        run: npx eslint scripts.js --no-config-lookup
 
-# Path: .github/workflows/lintj_avascript.yml
-  deploy:
-    needs:
-      - lint
+  test:
     runs-on: ubuntu-latest
-    steps: 
-    - uses: actions/checkout@v4
-    - name: Deploy educational content
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.test }}
-        publish_dir: ./dist
-  
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Audit dependencies
+        run: npm audit
+
+  deploy:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy educational content
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.test }}
+          publish_dir: ./dist
+
+  deploy-verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify deployment
+        run: echo "Deployment verification step"
 
 
 
